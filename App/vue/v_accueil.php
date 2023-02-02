@@ -26,12 +26,14 @@ $req = "SELECT * FROM exemplaire JOIN jeu ON `exemplaire`.`jeu_id` = `jeu`.`id_j
                 <p><?= $description ?></p>
                 <p><?= ' En '.$etat ." état " ?></p>
                 <p><?= "Prix : " . $prix . " Euros" ?>
-                    <a href="index.php?uc=visite&idexemplaire=<?php echo $idexemplaire?> &action=ajouterAuPanierDepuisAccueil">
+                    <a href="index.php?uc=accueil&idexemplaire=<?php echo $idexemplaire?> &action=ajouterAuPanierDepuisAccueil">
                         <img src="public/images/mettrepanier.png" title="Ajouter au panier" class="add"/>
                     </a>
                 </p>
             </article>
             <?php
         }
-        ?>
+
+      
+       ?>
     </section>

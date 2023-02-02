@@ -21,6 +21,26 @@ switch ($action) {
         }
         $lesJeux = M_Exemplaire::trouverAllJeux();
         break;
+    case "ajouterAuPanierCat":
+        $idexemplaire = filter_input(INPUT_GET, 'idexemplaire');
+        if (!ajouterAuPanier($idexemplaire)) {
+            afficheErreurs(["Ce jeu est déjà dans le panier !!"]);
+        } else {
+            afficheMessage("Ce jeu a été ajouté");
+        }
+        $categorie = filter_input(INPUT_GET, 'categorie');
+        $lesJeux = M_Exemplaire::trouveLesJeuxDeCategorie($categorie);
+        break;
+    case "ajouterAuPanierEtat":
+        $idexemplaire = filter_input(INPUT_GET, 'idexemplaire');
+        if (!ajouterAuPanier($idexemplaire)) {
+            afficheErreurs(["Ce jeu est déjà dans le panier !!"]);
+        } else {
+            afficheMessage("Ce jeu a été ajouté");
+        }
+        $etat = filter_input(INPUT_GET, 'etat');
+        $lesJeux = M_Exemplaire::trouverLesEtat($etat);
+        break;
     case 'ajouterAuPanierDepuisAccueil':
         $idexemplaire = filter_input(INPUT_GET, 'idexemplaire');
         if (!ajouterAuPanier($idexemplaire)) {

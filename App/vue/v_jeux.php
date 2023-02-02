@@ -1,5 +1,10 @@
 <section id="visite">
     <aside id="categories">
+
+        <a href="index.php?uc=visite&action=voirAll">
+            <div id=voirAll>Voir tous les jeux
+            </div>
+        </a>
         <ul>
             <?php
             foreach ($lesCategories as $uneCategorie) {
@@ -8,16 +13,15 @@
             ?>
                 <li>
                     <a href=index.php?uc=visite&categorie=<?php echo $idCategorie ?>&action=voirJeux><?php echo $libCategorie ?></a>
+
+
                 </li>
             <?php
             }
             ?>
         </ul>
 
-        <a href="index.php?uc=visite&action=voirAll">
-            <div id=voirAll>Voir tous les jeux
-            </div>
-        </a>
+
 
 
         <div id="voir_etat">
@@ -55,9 +59,28 @@
                 <p><?= ' En ' . $etat . " état " ?></p>
 
                 <p><?= "Prix : " . $prix . " Euros<br>" ?>
-                    <a href="index.php?uc=visite&categorie=<?= $categorie ?>&idexemplaire=<?= $idexemplaire ?>&action=ajouterAuPanier">
-                        <img src="public/images/mettrepanier.png" title="Ajouter au panier" class="add" />
-                    </a>
+                    <?php
+                    if (isset($_GET["categorie"])) { ?>
+                        <a href="index.php?uc=visite&idexemplaire=<?= $idexemplaire ?>&action=ajouterAuPanierCat&categorie=<?= $_GET["categorie"] ?>">
+                            <img src="public/images/mettrepanier.png" title="Ajouter au panier" class="add" />
+                        </a>
+
+                    <?php
+                    }
+                    if (isset($_POST["etat"])) { ?>
+                        <a href="index.php?uc=visite&idexemplaire=<?= $idexemplaire ?>&action=ajouterAuPanierEtat&etat=<?= filter_input(INPUT_POST, 'etat') ?>">
+                            <img src="public/images/mettrepanier.png" title="Ajouter au panier" class="add" />
+                        </a>
+                    <?php
+                    }
+                    if ((!isset($_GET["categorie"])) && (!isset($_POST["etat"]))) { ?>
+                        <a href="index.php?uc=visite&idexemplaire=<?= $idexemplaire ?>&action=ajouterAuPanier">
+                            <img src="public/images/mettrepanier.png" title="Ajouter au panier" class="add" />
+                        </a>
+                    <?php
+                    }
+                    ?>
+
                 </p>
             </article>
         <?php

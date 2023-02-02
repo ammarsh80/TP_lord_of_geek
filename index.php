@@ -23,6 +23,9 @@ if (!$uc) {
 
 // Controleur principale
 switch ($uc) {
+    case 'accueil' :
+        include 'App/controleur/c_consultation.php';
+        break;
     case 'visite' :
         include 'App/controleur/c_consultation.php';
         break;
