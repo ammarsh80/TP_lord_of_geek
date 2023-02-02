@@ -21,6 +21,7 @@
         <?php
     }
     ?>
+    
     <br>
     <a href=index.php?uc=commander&action=passerCommande>
         <img src="public/images/commander.jpg" title="Passer commande" >

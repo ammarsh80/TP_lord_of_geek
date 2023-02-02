@@ -34,6 +34,7 @@ $req = "SELECT * FROM exemplaire JOIN jeu ON `exemplaire`.`jeu_id` = `jeu`.`id_j
             <?php
         }
 
+        
       
        ?>
     </section>

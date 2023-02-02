@@ -13,16 +13,11 @@
             ?>
                 <li>
                     <a href=index.php?uc=visite&categorie=<?php echo $idCategorie ?>&action=voirJeux><?php echo $libCategorie ?></a>
-
-
                 </li>
             <?php
             }
             ?>
         </ul>
-
-
-
 
         <div id="voir_etat">
 
