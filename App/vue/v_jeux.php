@@ -55,25 +55,29 @@
 
                 <p><?= "Prix : " . $prix . " Euros<br>" ?>
                     <?php
-                    if (isset($_GET["categorie"])) { ?>
-                        <a href="index.php?uc=visite&idexemplaire=<?= $idexemplaire ?>&action=ajouterAuPanierCat&categorie=<?= $_GET["categorie"] ?>">
-                            <img src="public/images/mettrepanier.png" title="Ajouter au panier" class="add" />
-                        </a>
-
-                    <?php
-                    }
-                    if (isset($_POST["etat"])) { ?>
-                        <a href="index.php?uc=visite&idexemplaire=<?= $idexemplaire ?>&action=ajouterAuPanierEtat&etat=<?= filter_input(INPUT_POST, 'etat') ?>">
-                            <img src="public/images/mettrepanier.png" title="Ajouter au panier" class="add" />
-                        </a>
-                    <?php
-                    }
-                    if ((!isset($_GET["categorie"])) && (!isset($_POST["etat"]))) { ?>
+                      while ((!isset($_GET["categorie"])) && (!isset($_POST["etat"]))) { ?>
                         <a href="index.php?uc=visite&idexemplaire=<?= $idexemplaire ?>&action=ajouterAuPanier">
                             <img src="public/images/mettrepanier.png" title="Ajouter au panier" class="add" />
                         </a>
                     <?php
+                    break;
                     }
+                    while (isset($_GET["categorie"])) { ?>
+                        <a href="index.php?uc=visite&idexemplaire=<?= $idexemplaire ?>&action=ajouterAuPanierCat&categorie=<?= filter_var($_GET["categorie"]) ?>">
+                            <img src="public/images/mettrepanier.png" title="Ajouter au panier" class="add" />
+                        </a>
+
+                    <?php
+                        break;
+                    }
+                    while (isset($_POST["etat"])) { ?>
+                        <a href="index.php?uc=visite&idexemplaire=<?= $idexemplaire ?>&action=ajouterAuPanierEtat&etat=<?= filter_input(INPUT_POST, 'etat') ?>">
+                            <img src="public/images/mettrepanier.png" title="Ajouter au panier" class="add" />
+                        </a>
+                    <?php
+                        break;
+                    }
+                  
                     ?>
 
                 </p>

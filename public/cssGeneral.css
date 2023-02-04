@@ -144,8 +144,9 @@ input[type="submit"] {
 
 #jeux_acceuil {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+    align-items: center;
 }
 
 #jeux_acceuil>img {
