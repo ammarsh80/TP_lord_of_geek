@@ -19,6 +19,7 @@ Prototype de Lord Of Geek (LOG)
                     <li><a href="index.php?uc=accueil&action=voirAll"> Accueil </a></li>
                     <li><a href="index.php?uc=visite&action=voirAll"> Voir le catalogue de jeux </a></li>
                     <li><a href="index.php?uc=panier&action=voirPanier"> Voir son panier </a></li>
+                    <li><a href="index.php?uc=inscription&action=demandeInscription"> S'inscrire</a></li>
                     <li><a href="index.php?uc=compte"> Mon compte </a></li>
                 </ul>
             </nav>
@@ -43,6 +44,9 @@ Prototype de Lord Of Geek (LOG)
                     break;
                 case 'compte' :
                     include ("App/vue/v_compte.php");
+                    break;
+                case 'inscription' :
+                    include ("App/vue/v_inscription.php");
                     break;
                 default:
                     break;
