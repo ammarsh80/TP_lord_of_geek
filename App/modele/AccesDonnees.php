@@ -59,8 +59,4 @@ class AccesDonnees {
         return AccesDonnees::getPdo()->exec($requete_sql);
     }
 
-    // public static function execInt(int $requete_sql){
-    //     return AccesDonnees::getPdo()->exec($requete_sql);
-
-    // }
 }

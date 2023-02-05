@@ -14,17 +14,6 @@ class M_Exemplaire {
      * @param $idCategorie
      * @return un tableau associatif
      */
-    // public static function trouveLesJeuxDeCategorie($idCategorie) {
-    //     $req = "SELECT * FROM exemplaire 
-    //     JOIN jeu ON `exemplaire`.`jeu_id` = `jeu`.`id_jeu` 
-    //     JOIN categorie ON `jeu`.`categorie_id` = `categorie`.`id_categorie` 
-    //     JOIN console ON `exemplaire`.`console_id` = `console`.`id_console` 
-    //     WHERE `categorie`.`id_categorie` = '$idCategorie'";
-    //     $res = AccesDonnees::query($req);
-    //     $lesLignes = $res->fetchAll();
-    //     return $lesLignes;
-    // }
-
     public static function trouveLesJeuxDeCategorie($idCategorie) {
         $req = "SELECT * FROM exemplaire
          JOIN jeu ON `exemplaire`.`jeu_id` = `jeu`.`id_jeu` 
@@ -38,16 +27,11 @@ class M_Exemplaire {
         return $lesLignes;
         }
 
-
-    // public static function trouverAllJeux(){
-    //     $reqSQL = "SELECT * FROM exemplaire 
-    //     JOIN jeu ON `exemplaire`.`jeu_id` = `jeu`.`id_jeu` 
-    //     JOIN categorie ON `jeu`.`categorie_id` = `categorie`.`id_categorie` 
-    //     JOIN console ON `exemplaire`.`console_id` = `console`.`id_console`";
-    //     $res = AccesDonnees::query($reqSQL);
-    //     $voirTousLesJeux = $res->fetchAll();
-    //     return $voirTousLesJeux;   
-    // }
+/**
+ * affiche tou les jeux
+ *
+ * @return void
+ */
     public static function trouverAllJeux(){
         $reqSQL = "SELECT * FROM exemplaire
        JOIN jeu ON `exemplaire`.`jeu_id` = `jeu`.`id_jeu` 

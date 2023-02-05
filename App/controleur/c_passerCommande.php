@@ -39,9 +39,7 @@ switch ($action) {
             $idclient = M_Commande::trouveOuCreerClient($nom, $prenom, $rue, $mail, $id_ville);
             $listJeux = getLesIdJeuxDuPanier();
             M_Commande::creerCommande($idclient, $id_ville, $listJeux);
-            
-            
-            
+     
             supprimerPanier();
             afficheMessage("Commande enregistrée");
             $uc = '';

@@ -21,19 +21,16 @@
 
         <div id="voir_etat">
 
-            Voir les jeux selon l'etat:
-            <form action="index.php?uc=visite&action=selonEtat&etat=" method="POST">
+            <label for="etat">Voir les jeux selon l'etat:</label>
+            <form action="index.php?uc=visite&action=selonEtat" method="POST">
                 <select name="etat" id="etat">
-                    <option value="">--Afficher les jeux selon état--</option>
+                    <option value="">--Choisir état--</option>
                     <option value="bon">Bon</option>
                     <option value="moyen">Moyen</option>
                     <option value="mauvais">Mauvais</option>
-                    <br>
-                    <input type="submit" value="OK">
-
-
+                </select>
+                <input type="submit" value="OK">
             </form>
-
 
         </div>
     </aside>
@@ -58,29 +55,26 @@
 
                 <p><?= "Prix : " . $prix . " Euros<br>" ?>
                     <?php
-                      while ((!isset($_GET["categorie"])) && (!isset($_POST["etat"]))) { ?>
+                    if ((!isset($_GET["categorie"])) && (!isset($_POST["etat"]))) { ?>
                         <a href="index.php?uc=visite&idexemplaire=<?= $idexemplaire ?>&action=ajouterAuPanier">
                             <img src="public/images/mettrepanier.png" title="Ajouter au panier" class="add" />
                         </a>
                     <?php
-                    break;
                     }
-                    while ((isset($_GET["categorie"])) && (!isset($_POST["etat"]))) { ?>
-                        <a href="index.php?uc=visite&idexemplaire=<?= $idexemplaire ?>&action=ajouterAuPanierCat&categorie=<?= filter_var($_GET["categorie"]) ?>">
+                    if (isset($_GET["categorie"])) { ?>
+                        <a href="index.php?uc=visite&idexemplaire=<?= $idexemplaire ?>&action=ajouterAuPanierCat&categorie=<?= filter_input(INPUT_GET, "categorie") ?>">
                             <img src="public/images/mettrepanier.png" title="Ajouter au panier" class="add" />
                         </a>
 
                     <?php
-                        break;
                     }
-                    while ((!isset($_GET["categorie"])) && (isset($_POST["etat"]))) { ?>
-                        <a href="index.php?uc=visite&idexemplaire=<?= $idexemplaire ?>&action=ajouterAuPanierEtat&etat=<?= filter_input(INPUT_POST, 'etat') ?>">
+                    if (isset($_POST["etat"])) { ?>
+                        <a href="index.php?uc=visite&idexemplaire=<?= $idexemplaire ?>&action=ajouterAuPanierEtat&etat=<?= filter_input(INPUT_POST, "etat") ?>">
                             <img src="public/images/mettrepanier.png" title="Ajouter au panier" class="add" />
                         </a>
                     <?php
-                        break;
                     }
-                  
+
                     ?>
 
                 </p>
