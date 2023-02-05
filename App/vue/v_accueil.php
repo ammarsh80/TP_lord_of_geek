@@ -6,37 +6,31 @@
         le prince des jeux sur internet
     </h2>
 </section>
-<?php
-$req = "SELECT * FROM exemplaire JOIN jeu ON `exemplaire`.`jeu_id` = `jeu`.`id_jeu` JOIN categorie ON `jeu`.`categorie_id` = `categorie`.`id_categorie` JOIN console ON `exemplaire`.`console_id` = `console`.`id_console`";
-        $res = AccesDonnees::query($req);
-        $lesJeux = $res->fetchAll();
+<section id="section_jeux_acceuil">
+    <?php
+    foreach ($lesJeux as $unJeu) {
+        $idexemplaire = $unJeu['id_exemplaire'];
+        $description = $unJeu['description'];
+        $etat = $unJeu['etat'];
+        $prix = $unJeu['prix'];
+        $image = $unJeu['image'];
+        $console = $unJeu['nom_console'];
+    ?>
+        <article id="jeux_acceuil">
+            <img src="public/images/jeux/<?= $image ?>" alt="Image de <?= $description; ?>" />
+            <p>Sur la console <?= $console ?></p>
+            <p><?= $description ?></p>
+            <p><?= ' En ' . $etat . " état " ?></p>
+            <p><?= "Prix : " . $prix . " Euros" ?>
+                <a href="index.php?uc=accueil&idexemplaire=<?php echo $idexemplaire ?> &action=ajouterAuPanierDepuisAccueil">
+                    <img src="public/images/mettrepanier.png" title="Ajouter au panier" class="add" />
+                </a>
+            </p>
+        </article>
+    <?php
+    }
 
-        ?>
-    <section  id="section_jeux_acceuil">
-        <?php
-        foreach ($lesJeux as $unJeu) {
-            $idexemplaire = $unJeu['id_exemplaire'];
-            $description = $unJeu['description'];
-            $etat = $unJeu['etat'];
-            $prix = $unJeu['prix'];
-            $image = $unJeu['image'];
-            $console = $unJeu['nom_console'];
-            ?>
-            <article id="jeux_acceuil">
-                <img src="public/images/jeux/<?= $image ?>" alt="Image de <?= $description; ?>"/>
-                <p>Sur la console <?= $console ?></p>
-                <p><?= $description ?></p>
-                <p><?= ' En '.$etat ." état " ?></p>
-                <p><?= "Prix : " . $prix . " Euros" ?>
-                    <a href="index.php?uc=accueil&idexemplaire=<?php echo $idexemplaire?> &action=ajouterAuPanierDepuisAccueil">
-                        <img src="public/images/mettrepanier.png" title="Ajouter au panier" class="add"/>
-                    </a>
-                </p>
-            </article>
-            <?php
-        }
 
-        
-      
-       ?>
-    </section>
+
+    ?>
+</section>

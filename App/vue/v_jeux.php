@@ -46,10 +46,13 @@
             $prix = $unJeu['prix'];
             $image = $unJeu['image'];
             $etat = $unJeu['etat'];
+            $console = $unJeu['nom_console'];
+
 
         ?>
             <article id="article_voirAll">
                 <img src="public/images/jeux/<?= $image ?>" alt="Image de <?= $description; ?>" class="article_voirAll" />
+                <p>Sur la console <?= $console ?></p>
                 <p><?= $description ?></p>
                 <p><?= ' En ' . $etat . " état " ?></p>
 
@@ -62,7 +65,7 @@
                     <?php
                     break;
                     }
-                    while (isset($_GET["categorie"])) { ?>
+                    while ((isset($_GET["categorie"])) && (!isset($_POST["etat"]))) { ?>
                         <a href="index.php?uc=visite&idexemplaire=<?= $idexemplaire ?>&action=ajouterAuPanierCat&categorie=<?= filter_var($_GET["categorie"]) ?>">
                             <img src="public/images/mettrepanier.png" title="Ajouter au panier" class="add" />
                         </a>
@@ -70,7 +73,7 @@
                     <?php
                         break;
                     }
-                    while (isset($_POST["etat"])) { ?>
+                    while ((!isset($_GET["categorie"])) && (isset($_POST["etat"]))) { ?>
                         <a href="index.php?uc=visite&idexemplaire=<?= $idexemplaire ?>&action=ajouterAuPanierEtat&etat=<?= filter_input(INPUT_POST, 'etat') ?>">
                             <img src="public/images/mettrepanier.png" title="Ajouter au panier" class="add" />
                         </a>
