@@ -1,4 +1,6 @@
 
+
+
 <section>
     <h1>
         Lord Of Geek
@@ -30,8 +32,5 @@
         </article>
     <?php
     }
-
-
-
     ?>
 </section>

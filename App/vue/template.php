@@ -13,6 +13,7 @@ Prototype de Lord Of Geek (LOG)
 
 <body>
     <header>
+
         <!-- Images En-tête -->
         <img src="public/images/logo.png" alt="Logo Lord Of Geek" />
         <!--  Menu haut-->
@@ -28,22 +29,20 @@ Prototype de Lord Of Geek (LOG)
     </header>
     <main>
         <section id="identification">
-            <div>
-                <form action="index.php?uc=compte" method="post">
-                    <label for="identifiant">Identifiant (votre pseudo):</label>
-                    <p><input type="text" name="identifiant" value="" /></p>
-                    <label for="mot_de_passe">Mot de passe :</label>
-                    <p><input type="password" name="mot_de_passe" value="" />
-                    <input type="submit" name="connexion" value="Connexion" /></p>
-                   
+            <div id="div_connexion">
+                <form action="index.php?uc=administrer" method="post">
+                    <div> <label for="identifiant">Identifiant (votre pseudo):</label>
+                        <input type="text" name="identifiant" value="" />
+                        <label for="mot_de_passe" id="label_psw">Mot de passe :</label>
+                        <input type="password" name="mot_de_passe" id="input_psw" value="" />
+                    </div>
+                    <input type="submit" name="connexion" id="connexion" value="Connexion" />
+                    
                 </form>
             </div>
-            <div>
-                <form action="index.php?uc=accueil&action=voirAll" method="post">
-                    <label for="deconnexion">Se déconnecter</label>
-                    <input type="submit" name="deconnexion" value="Déconnexion" />
-                </form>
-            </div>
+            <form action="index.php?uc=deconnexion" method="post">
+                <input type="submit" name="deconnexion" id="input_deconnexion" value="Déconnexion" />
+            </form>
         </section>
 
         <?php

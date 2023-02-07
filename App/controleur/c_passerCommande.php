@@ -1,6 +1,7 @@
 <?php
 
 include 'App/modele/M_commande.php';
+include 'App/modele/M_Session.php';
 
 /**
  * Controleur pour les commandes
@@ -34,7 +35,7 @@ switch ($action) {
             afficheErreurs($errors);
         } else {
             
-            $id_ville = M_Commande::trouveOuCreer($ville, $cp);
+            $id_ville = M_Commande::trouveOuCreerVille($ville, $cp);
             
             $idclient = M_Commande::trouveOuCreerClient($nom, $prenom, $rue, $mail, $id_ville);
             $listJeux = getLesIdJeuxDuPanier();

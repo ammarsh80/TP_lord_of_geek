@@ -10,7 +10,7 @@ class M_Session
             $conn = AccesDonnees::getPdo();
             // set the PDO error mode to exception
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            echo "Connected successfully";
+            // echo "Connected successfully";
         } catch (PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
             die;
@@ -55,24 +55,45 @@ class M_Session
         $stmt->bindParam(":psw", $psw);
         return $stmt->execute();
     }
+    // public function checkPassword(String $pseudo, String $psw)
+    // {
+    //     $conn = $this->connexion();
+    //     $sql = "SELECT id_utilisateur, mot_de_passe FROM utilisateur WHERE identifiant = :pseudo AND mot_de_passe = :psw";
+    //     // prepare and bind
+    //     $stmt = $conn->prepare($sql);
+    //     $stmt->bindParam(":pseudo", $pseudo);
+    //     $stmt->bindParam(":psw", $psw);
+    //     // Exécution
+    //     $stmt->execute();
+    //     $data = $stmt->fetch();
+    //     $psw_bdd = $data['mot_de_passe'];
+    //     if (!password_verify($psw, $psw_bdd)) {
+    //         $data = false;
+    //     }
+    //     return $data['id_utilisateur'];
+    //     echo "vous êtes connecté";
+    // }
+
     public function checkPassword(String $pseudo, String $psw)
     {
         $conn = $this->connexion();
-        $sql = "SELECT id, mot_de_passe FROM utilisateur WHERE identifiant = :pseudo";
+        $sql = "SELECT id_utilisateur, mot_de_passe, identifiant FROM utilisateur WHERE identifiant = :pseudo";
         // prepare and bind
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(":pseudo", $pseudo);
         // Exécution
         $stmt->execute();
-
         $data = $stmt->fetch();
         $psw_bdd = $data['mot_de_passe'];
-
-        if (!password_verify($psw, $psw_bdd)) {
-            $data = false;
+        if (password_verify($psw, $psw_bdd)) {
+            $id_utilisateur= $data['id_utilisateur'];
+            $identifiant= $data['identifiant'];
+            echo "Bonjour "."$identifiant". " vous êtes connecté";
+            return $id_utilisateur;
         }
-        return $data['id'];
+        return false;
     }
+
 
     /**
      * Retourne vrai si pas d'erreur
@@ -149,7 +170,7 @@ class M_Session
     //     }
     // }
 
-        /**
+    /**
      * trouve ou creer une ville
      *
      * @param [chaîne] $ville
@@ -176,8 +197,8 @@ class M_Session
         }
         return $id_ville;
     }
-    
- 
+
+
     // function register(String $pseudo, String $psw): bool
     // {
     //     $conn = $this->connexion();
@@ -224,11 +245,10 @@ class M_Session
             $statement->execute();
             $id_client = $statement->fetchColumn();
             $id_client = $pdo->lastInsertId();
-            
         }
         return $id_client;
     }
-       /**
+    /**
      * creer un nouveau utilisateur
      *
      * @param [chaîne] $pseudo

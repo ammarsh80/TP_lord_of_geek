@@ -83,7 +83,7 @@ class M_Commande
      * @param [INT] $cp
      * @return :$id_ville
      */
-    public static function trouveOuCreer($ville, $cp)
+    public static function trouveOuCreerVille($ville, $cp)
     {
         $pdo = AccesDonnees::getPdo();
         $req = "SELECT ville.id_ville FROM ville WHERE nom_ville = :ville AND cp= :cp";
@@ -103,8 +103,46 @@ class M_Commande
         }
         return $id_ville;
     }
-    /**
-     * trouve un client déjà enregistré ou crée un nouveau client
+    // /**
+    //  * trouve un client déjà enregistré ou crée un nouveau client
+    //  *
+    //  * @param [chaîne] $nom
+    //  * @param [chaîne] $prenom
+    //  * @param [chaîne] $adresse
+    //  * @param [chaîne] $email
+    //  * @param [INT] $ville_id
+    //  * @return :$idclient
+    //  */
+    // public static function trouveOuCreerClient($nom, $prenom, $adresse, $email, $ville_id)
+    // {
+
+    //     $pdo = AccesDonnees::getPdo();
+    //     $req = "SELECT id_client FROM client WHERE nom = :nom AND prenom = :prenom AND adresse = :adresse AND email = :email AND ville_id = :ville_id";
+    //     $statement = AccesDonnees::getPdo()->prepare($req);
+    //     $statement->bindParam(':nom', $nom, PDO::PARAM_STR);
+    //     $statement->bindParam(':prenom', $prenom, PDO::PARAM_STR);
+    //     $statement->bindParam(':adresse', $adresse, PDO::PARAM_STR);
+    //     $statement->bindParam(':email', $email, PDO::PARAM_STR);
+    //     $statement->bindParam(':ville_id', $ville_id, PDO::PARAM_INT);
+    //     $statement->execute();
+    //     $idclient = $statement->fetchColumn();
+
+    //     if ($idclient == false) {
+    //         $req = "INSERT INTO client (nom, prenom, adresse, email, ville_id) VALUES (:nom,:prenom,:adresse,:email,:ville_id)";
+    //         $statement = AccesDonnees::getPdo()->prepare($req);
+    //         $statement->bindParam(':nom', $nom, PDO::PARAM_STR);
+    //         $statement->bindParam(':prenom', $prenom, PDO::PARAM_STR);
+    //         $statement->bindParam(':adresse', $adresse, PDO::PARAM_STR);
+    //         $statement->bindParam(':email', $email, PDO::PARAM_STR);
+    //         $statement->bindParam(':ville_id', $ville_id, PDO::PARAM_INT);
+    //         $statement->execute();
+    //         $idclient = $statement->fetchColumn();
+    //         $idclient = $pdo->lastInsertId();
+    //     }
+    //     return $idclient;
+    // }
+       /**
+     * crée un nouveau client
      *
      * @param [chaîne] $nom
      * @param [chaîne] $prenom
@@ -125,9 +163,8 @@ class M_Commande
         $statement->bindParam(':email', $email, PDO::PARAM_STR);
         $statement->bindParam(':ville_id', $ville_id, PDO::PARAM_INT);
         $statement->execute();
-        $idclient = $statement->fetchColumn();
-
-        if ($idclient == false) {
+        $id_client = $statement->fetchColumn();
+        if ($id_client == false) {
             $req = "INSERT INTO client (nom, prenom, adresse, email, ville_id) VALUES (:nom,:prenom,:adresse,:email,:ville_id)";
             $statement = AccesDonnees::getPdo()->prepare($req);
             $statement->bindParam(':nom', $nom, PDO::PARAM_STR);
@@ -136,9 +173,9 @@ class M_Commande
             $statement->bindParam(':email', $email, PDO::PARAM_STR);
             $statement->bindParam(':ville_id', $ville_id, PDO::PARAM_INT);
             $statement->execute();
-            $idclient = $statement->fetchColumn();
-            $idclient = $pdo->lastInsertId();
+            $id_client = $statement->fetchColumn();
+            $id_client = $pdo->lastInsertId();
         }
-        return $idclient;
+        return $id_client;
     }
 }

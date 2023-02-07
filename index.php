@@ -41,6 +41,9 @@ switch ($uc) {
     case 'administrer' :
         include 'App/controleur/c_monCompte.php';
         break;
+    case 'deconnexion' :
+        include 'App/controleur/c_deconnexion.php';
+        break;
     default: 
     break;
 }

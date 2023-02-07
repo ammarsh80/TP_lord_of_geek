@@ -33,6 +33,7 @@ body {
 
 /* ---------- Entete ----------------------------------------------------*/
 header {
+    margin-top: 50px;
     display: flex;
     align-items: center;
 
@@ -166,7 +167,7 @@ input[type="submit"] {
     text-decoration: none;
 }
 
-#categories  {
+#categories {
     display: flex;
     flex-direction: column;
 }
@@ -174,7 +175,7 @@ input[type="submit"] {
 #categories a {
     text-decoration: none;
     display: flex;
-    
+
 }
 
 #jeux {
@@ -194,16 +195,17 @@ input[type="submit"] {
 
 
 
-#article_voirAll{
+#article_voirAll {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
 }
+
 .article_voirAll {
-width: 100px;
-height: 350px;
-border-radius: 10px;
+    width: 100px;
+    height: 350px;
+    border-radius: 10px;
 }
 
 #voir_etat {
@@ -212,28 +214,68 @@ border-radius: 10px;
     width: fit-content;
     margin-top: 50px;
 }
+
 #voir_etat label {
-   width: 200px;
-   margin-bottom: 5px;
+    width: 200px;
+    margin-bottom: 5px;
 }
 
-#form_inscription{
+#form_inscription {
     width: 70vw;
-   background-color: rgb(216, 136, 127);
-   padding: 20px;
-   margin-left: 10vw;
-   margin-top: 30px;
-  
-}
-#form_inscription fieldset{
-margin-left: 25%; 
-}
-#form_inscription h1{
-margin-left: 25%; 
+    background-color: rgb(216, 136, 127);
+    padding: 20px;
+    margin-left: 10vw;
+    margin-top: 30px;
+
 }
 
-#identification{
+#form_inscription fieldset {
+    margin-left: 25%;
+}
+
+#form_inscription h1 {
+    margin-left: 25%;
+}
+
+#identification {
+    background-color: #fb6e11;
+   padding-top: 10px;
+    padding-left: 10px;
+    padding-bottom: 3px;
+    /*  position: fixed;
+    top: 30px;
+    width: 90vw;
+    height: 30px;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 900px 100px 100px; */
+}
+
+
+
+
+#identification div {
     width: 900px;
-display: flex;
-flex-direction: column;    
+    display: flex;
+}
+
+#connexion,
+#input_deconnexion {
+    margin-top: 0px;
+    width: 100px;
+    height: 20px;
+    background-color: rgb(242, 227, 18);
+}
+#connexion{
+    /* position: absolute;
+    top: 10px;
+    right: 30px; */
+    background-color: rgb(43, 245, 225);
+}
+#label_psw{
+    margin-left: 30px;
+    margin-right: -100px;
+}
+#input_psw{
+    margin-right: 40px;
 }
