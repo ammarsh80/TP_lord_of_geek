@@ -1,11 +1,13 @@
 <?php
+
 class M_Session
 {
     private function connexion(): PDO
     {
         // Connexion et sélection de la base de données :
         try {
-            $conn = new PDO("mysql:host=localhost:8080;dbname=ma_base_jeux", "root", "MajdAhmad023716292)");
+            // $conn = new PDO("mysql:host=localhost:8080; dbname=ma_base_jeux", "root", "MajdAhmad023716292)");
+            $conn = AccesDonnees::getPdo();
             // set the PDO error mode to exception
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             echo "Connected successfully";
@@ -21,7 +23,7 @@ class M_Session
     function utilisateur_existe($identifiant, $mot_de_passe): bool
     {
         $conn = $this->connexion();
-        $sql = 'SELECT 1 FROM utilisateurs ';
+        $sql = 'SELECT 1 FROM utilisateur ';
         $sql .= 'WHERE identifiant = :login AND mot_de_passe = :mdp';
         // prepare and bind
         $stmt = $conn->prepare($sql);
@@ -46,7 +48,7 @@ class M_Session
     {
         $conn = $this->connexion();
         $psw = password_hash($psw, PASSWORD_BCRYPT);
-        $sql = "INSERT INTO utilisateurs (identifiant, mot_de_passe)
+        $sql = "INSERT INTO utilisateur (identifiant, mot_de_passe)
         VALUES(:pseudo, :psw);";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(":pseudo", $pseudo);
@@ -56,7 +58,7 @@ class M_Session
     public function checkPassword(String $pseudo, String $psw)
     {
         $conn = $this->connexion();
-        $sql = "SELECT id, mot_de_passe FROM utilisateurs WHERE identifiant = :pseudo";
+        $sql = "SELECT id, mot_de_passe FROM utilisateur WHERE identifiant = :pseudo";
         // prepare and bind
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(":pseudo", $pseudo);
@@ -119,45 +121,76 @@ class M_Session
         }
         return $erreurs;
     }
-    /**
-     * creer une ville
+    // /**
+    //  * creer une ville
+    //  *
+    //  * @param [chaîne] $ville
+    //  * @param [INT] $cp
+    //  * @return :$id_ville
+    //  */
+    // public static function creerVille($ville, $cp)
+    // {
+    //     $pdo = AccesDonnees::getPdo();
+    //     $req = "SELECT ville.id_ville FROM ville WHERE nom_ville = :ville AND cp= :cp";
+    //     $statement = AccesDonnees::getPdo()->prepare($req);
+    //     $statement->bindParam(':ville', $ville, PDO::PARAM_STR);
+    //     $statement->bindParam(':cp', $cp, PDO::PARAM_INT);
+    //     $statement->execute();
+    //     $id_ville = $statement->fetchColumn();
+
+    //     if ($id_ville == false) {
+    //         $req = "INSERT INTO ville (nom_ville, cp) VALUES (:ville,:cp)";
+    //         $statement = AccesDonnees::getPdo()->prepare($req);
+    //         $statement->bindParam(':ville', $ville, PDO::PARAM_STR);
+    //         $statement->bindParam(':cp', $cp, PDO::PARAM_INT);
+    //         $statement->execute();
+    //         $id_ville = AccesDonnees::getPdo()->lastInsertId();
+    //         return $id_ville;
+    //     }
+    // }
+
+        /**
+     * trouve ou creer une ville
      *
      * @param [chaîne] $ville
      * @param [INT] $cp
      * @return :$id_ville
      */
-    public static function creerVille($ville, $cp)
+    public static function trouveOuCreerVille($ville, $cp)
     {
-        $req = "INSERT INTO ville (nom_ville, cp) VALUES (:ville,:cp)";
+        $pdo = AccesDonnees::getPdo();
+        $req = "SELECT ville.id_ville FROM ville WHERE nom_ville = :ville AND cp= :cp";
         $statement = AccesDonnees::getPdo()->prepare($req);
         $statement->bindParam(':ville', $ville, PDO::PARAM_STR);
         $statement->bindParam(':cp', $cp, PDO::PARAM_INT);
         $statement->execute();
-        $id_ville = AccesDonnees::getPdo()->lastInsertId();
+        $id_ville = $statement->fetchColumn();
+
+        if ($id_ville == false) {
+            $req = "INSERT INTO ville (nom_ville, cp) VALUES (:ville,:cp)";
+            $statement = AccesDonnees::getPdo()->prepare($req);
+            $statement->bindParam(':ville', $ville, PDO::PARAM_STR);
+            $statement->bindParam(':cp', $cp, PDO::PARAM_INT);
+            $statement->execute();
+            $id_ville = AccesDonnees::getPdo()->lastInsertId();
+        }
         return $id_ville;
     }
-  /**
-   * creer un nouveau utilisateur
-   *
-   * @param [chaîne] $pseudo
-   * @param [chaîne] $psw
-   * @return void
-   */
-    public static function creerUtilisateur($pseudo, $psw ,$idclient)
-    {
-        $pdo = AccesDonnees::getPdo();
-        $req = "INSERT INTO utilisateur (identifiant, mot_de_passe, client_id) VALUES (:pseudo,:psw, :client_id)";
-        $statement = AccesDonnees::getPdo()->prepare($req);
-        $statement->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
-        $statement->bindParam(':psw', $psw, PDO::PARAM_STR);
-        $statement->bindParam(':client_id', $idclient, PDO::PARAM_INT);
-        $statement->execute();
-        $idUtilisateur = $statement->fetchColumn();
-        $idUtilisateur = $pdo->lastInsertId();
-        return $idUtilisateur;
-    }
+    
+ 
+    // function register(String $pseudo, String $psw): bool
+    // {
+    //     $conn = $this->connexion();
+    //     $psw = password_hash($psw, PASSWORD_BCRYPT);
+    //     $sql = "INSERT INTO utilisateur (identifiant, mot_de_passe)
+    //     VALUES(:pseudo, :psw);";
+    //     $stmt = $conn->prepare($sql);
+    //     $stmt->bindParam(":pseudo", $pseudo);
+    //     $stmt->bindParam(":psw", $psw);
+    //     return $stmt->execute();
+    // }
 
- /**
+    /**
      * crée un nouveau client
      *
      * @param [chaîne] $nom
@@ -167,10 +200,11 @@ class M_Session
      * @param [INT] $ville_id
      * @return :$idclient
      */
-    public static function creerClient($nom, $prenom, $adresse, $email, $ville_id)
+    public static function trouveOuCreerClient($nom, $prenom, $adresse, $email, $ville_id)
     {
+
         $pdo = AccesDonnees::getPdo();
-        $req = "INSERT INTO client (nom, prenom, adresse, email, ville_id) VALUES (:nom,:prenom,:adresse,:email,:ville_id)";
+        $req = "SELECT id_client FROM client WHERE nom = :nom AND prenom = :prenom AND adresse = :adresse AND email = :email AND ville_id = :ville_id";
         $statement = AccesDonnees::getPdo()->prepare($req);
         $statement->bindParam(':nom', $nom, PDO::PARAM_STR);
         $statement->bindParam(':prenom', $prenom, PDO::PARAM_STR);
@@ -178,8 +212,50 @@ class M_Session
         $statement->bindParam(':email', $email, PDO::PARAM_STR);
         $statement->bindParam(':ville_id', $ville_id, PDO::PARAM_INT);
         $statement->execute();
-        $idclient = $statement->fetchColumn();
-        $idclient = $pdo->lastInsertId();
-        return $idclient;
+        $id_client = $statement->fetchColumn();
+        if ($id_client == false) {
+            $req = "INSERT INTO client (nom, prenom, adresse, email, ville_id) VALUES (:nom,:prenom,:adresse,:email,:ville_id)";
+            $statement = AccesDonnees::getPdo()->prepare($req);
+            $statement->bindParam(':nom', $nom, PDO::PARAM_STR);
+            $statement->bindParam(':prenom', $prenom, PDO::PARAM_STR);
+            $statement->bindParam(':adresse', $adresse, PDO::PARAM_STR);
+            $statement->bindParam(':email', $email, PDO::PARAM_STR);
+            $statement->bindParam(':ville_id', $ville_id, PDO::PARAM_INT);
+            $statement->execute();
+            $id_client = $statement->fetchColumn();
+            $id_client = $pdo->lastInsertId();
+            
+        }
+        return $id_client;
+    }
+       /**
+     * creer un nouveau utilisateur
+     *
+     * @param [chaîne] $pseudo
+     * @param [chaîne] $psw
+     * @return void
+     */
+    public static function creerUtilisateur($pseudo, $psw, $id_client)
+    {
+
+        $pdo = AccesDonnees::getPdo();
+        $req = "SELECT id_utilisateur FROM utilisateur WHERE identifiant = :pseudo";
+        $statement = AccesDonnees::getPdo()->prepare($req);
+        $statement->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
+        $statement->execute();
+        $id_Utilisateur = $statement->fetchColumn();
+
+        if ($id_Utilisateur == false) {
+            $psw = password_hash($psw, PASSWORD_BCRYPT);
+            $req = "INSERT INTO utilisateur (identifiant, mot_de_passe, client_id) VALUES (:pseudo,:psw, :client_id)";
+            $statement = AccesDonnees::getPdo()->prepare($req);
+            $statement->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
+            $statement->bindParam(':psw', $psw, PDO::PARAM_STR);
+            $statement->bindParam(':client_id', $id_client, PDO::PARAM_INT);
+            $statement->execute();
+            $id_Utilisateur = $statement->fetchColumn();
+            $id_Utilisateur = $pdo->lastInsertId();
+        }
+        return $id_Utilisateur;
     }
 }

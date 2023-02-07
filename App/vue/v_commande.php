@@ -1,4 +1,5 @@
-﻿<section id="creationCommande">
+﻿
+<section id="creationCommande">
     <form method="POST" action="index.php?uc=commander&action=confirmerCommande">
         <fieldset>
             <legend>Commande</legend>

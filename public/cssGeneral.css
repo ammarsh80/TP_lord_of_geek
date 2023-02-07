@@ -231,3 +231,9 @@ margin-left: 25%;
 #form_inscription h1{
 margin-left: 25%; 
 }
+
+#identification{
+    width: 900px;
+display: flex;
+flex-direction: column;    
+}

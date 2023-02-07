@@ -40,10 +40,10 @@ switch ($action) {
             afficheErreurs($errors);
         } else {
 
-            $id_ville = M_Session::creerVille($ville, $cp);
-            $idClient = M_Session::creerClient($nom, $prenom, $rue, $mail, $id_ville);
-            $idUtilisateur = M_Session::creerUtilisateur($pseudo, $psw, $idClient);
-            afficheMessage("Vous venez de vous inscrire, bienvenue !");
+            $id_ville = M_Session::trouveOuCreerVille($ville, $cp);
+            $id_client = M_Session::trouveOuCreerClient($nom, $prenom, $rue, $mail, $id_ville);
+            $idUtilisateur = M_Session::creerUtilisateur($pseudo, $psw, $id_client);
+            afficheMessage("Vous venez de vous inscrire avec succès!<br> Veuillez vous-connecter grâce à votre pseudo (identifiant) et le mot de passe que vous venez de créer !");
             $uc = '';
         }
         break;

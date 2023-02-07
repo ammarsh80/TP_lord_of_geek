@@ -1,4 +1,3 @@
-
 <!-- <section id="creationCommande"> -->
 <section id="form_inscription">
 
