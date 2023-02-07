@@ -8,10 +8,13 @@ include 'App/modele/M_commande.php';
  */
 switch ($action) {
     case 'demandeInscription':
-        $n = nbJeuxDuPanier();
-        if ($n > 0) {
+        // $n = nbJeuxDuPanier();
+        // if ($n > 0) 
+        {
             $nom = '';
             $prenom = '';
+            $pseudo = '';
+            $psw = '';
             $rue = '';
             $ville = '';
             $cp = '';

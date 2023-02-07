@@ -18,6 +18,15 @@
                 <input id="prenom" type="text" name="prenom" value="<?= $prenom ?>" size="30" maxlength="45">
             </p>
             <p>
+                <label for="prenom">Pseudo*</label>
+                <input id="pseudo" type="text" name="pseudo" value="<?= $pseudo ?>" size="30" maxlength="45">
+            </p>
+            <p>
+                <label for="prenom">Mos de passe*</label>
+                <input id="psw" type="text" name="psw" value="<?= $psw ?>" size="30" maxlength="45">
+            </p>
+            <br>
+            <p>
                 <label for="rue">Rue*</label>
                 <input id="rue" type="text" name="rue" value="<?= $rue ?>" size="30" maxlength="45">
             </p>
