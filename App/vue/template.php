@@ -1,3 +1,7 @@
+<?php
+
+?>
+
 <!DOCTYPE html>
 <!--
 Prototype de Lord Of Geek (LOG)
