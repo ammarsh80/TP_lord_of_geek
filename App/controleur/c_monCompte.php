@@ -1,12 +1,10 @@
 
 <?php
-// session_start(); 
 
 include 'APP/modele/M_session.php';
-$formulaire_recu = filter_input(INPUT_POST, 'connexion');
+$connexion = filter_input(INPUT_POST, 'connexion');
 
-if ($formulaire_recu !=="Connexion"){
-  header('location: index.php?uc=accueil&action=voirAll');
+if ($connexion !=="Connexion"){
   echo "recommence";
   die;
 }
@@ -58,21 +56,21 @@ $mySession = new M_Session();
 $message = '';
 // Traitement du formulaire.
 
-if ($formulaire_recu == "Connexion") {
+if ($connexion == "Connexion") {
   // Récupérer les information saisies.
   $identifiant = filter_input(INPUT_POST, 'identifiant');
   $mot_de_passe = filter_input(INPUT_POST, 'mot_de_passe');
   // Vérifier que l'utilisateur existe.
 $_SESSION['id']= $mySession->checkPassword($identifiant,$mot_de_passe);
-if ($_SESSION['id']){
-  echo " Bravoooooooooo!!!";
-  // header('location: index.php?uc=accueil&action=voirAll');
+var_dump($_SESSION['id']);
+if ($_SESSION['id']==true){
+  echo ", Bienvenue!!!";
+  header('location: index.php?uc=accueil&action=voirAll');
   return $_SESSION['id'];
-  
 }
-//   var_dump($mySession->checkPassword($identifiant,$mot_de_passe));
 } 
-header('location: index.php?uc=accueil&action=voirAll');
+
+
 ?>
 
 

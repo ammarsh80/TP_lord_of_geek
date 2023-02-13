@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+
 
 
 // Pour afficher les erreurs PHP

@@ -64,13 +64,18 @@ header img {
 /* ---------- Jeux ----------------------------------------------------*/
 
 #visite {
+    width: 90vw;
     display: flex;
 }
 
 #visite aside ul {
+    margin-top:-10px;
     display: flex;
     flex-direction: column;
     width: fit-content;
+    justify-content:center;
+    align-items: center;
+    text-align: center;
 }
 
 #visite aside ul li {
@@ -155,10 +160,14 @@ input[type="submit"] {
     height: 200px;
     margin: 20px;
 }
-
+.voirAll{
+    width: 150px;
+    height: 50px; 
+}
 #voirAll {
     width: 150px;
     height: 50px;
+    margin-top:10px;
     background-color: #ff7f27;
     display: flex;
     justify-content: center;
@@ -181,10 +190,10 @@ input[type="submit"] {
 #jeux {
     width: auto;
     height: auto;
-    /* background-color: rgb(212, 242, 212); */
     padding: 10px;
-    display: flex;
-    flex-wrap: wrap;
+   display: flex;
+   flex-wrap:wrap;
+    gap:10px;
     margin-left: 10px;
 
 }
@@ -200,11 +209,12 @@ input[type="submit"] {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    margin-bottom: 10px;
 }
 
-.article_voirAll {
+#img_voirAll {
     width: 100px;
-    height: 350px;
+    height: 50px;
     border-radius: 10px;
 }
 

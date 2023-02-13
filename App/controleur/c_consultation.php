@@ -11,6 +11,10 @@ switch ($action) {
         $categorie = filter_input(INPUT_GET, 'categorie');
         $lesJeux = M_Exemplaire::trouveLesJeuxDeCategorie($categorie);
         break;
+    case 'voirJeuxConsole':
+        $console = filter_input(INPUT_GET, 'console');
+        $lesJeux = M_Exemplaire::trouveLesJeuxDeConsole($console);
+        break;
     case 'ajouterAuPanier':
         $idexemplaire = filter_input(INPUT_GET, 'idexemplaire');
         if (!ajouterAuPanier($idexemplaire)) {
@@ -30,6 +34,16 @@ switch ($action) {
         $categorie = filter_input(INPUT_GET, 'categorie');
         $lesJeux = M_Exemplaire::trouveLesJeuxDeCategorie($categorie);
         break;
+    case "ajouterAuPanierCon":
+        $idexemplaire = filter_input(INPUT_GET, 'idexemplaire');
+        if (!ajouterAuPanier($idexemplaire)) {
+            afficheErreurs(["Ce jeu est déjà dans le panier !!"]);
+        } else {
+            afficheMessage("Ce jeu a été ajouté");
+        }
+        $console = filter_input(INPUT_GET, 'console');
+        $lesJeux = M_Exemplaire::trouveLesJeuxDeConsole($console);
+        break;
     case "ajouterAuPanierEtat":
         $idexemplaire = filter_input(INPUT_GET, 'idexemplaire');
         if (!ajouterAuPanier($idexemplaire)) {
@@ -40,7 +54,6 @@ switch ($action) {
         // $etat = filter_input(INPUT_POST, 'etat');
         /* Normlement je dois mettre INPUT_POST, sauf que si je fais ça je perd l'affichage des jeux selon état une fois je rajoute un article dans le panier!!  */
         $etat = filter_input(INPUT_GET, 'etat'); 
-
         $lesJeux = M_Exemplaire::trouverLesEtat($etat);
         break;
     case 'ajouterAuPanierDepuisAccueil':
@@ -67,3 +80,4 @@ switch ($action) {
 }
 
 $lesCategories = M_Categorie::trouveLesCategories();
+$lesConsoles = M_Categorie::trouveLesConsoles();

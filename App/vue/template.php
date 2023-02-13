@@ -1,4 +1,6 @@
 <?php
+// session_status();
+// session_start(); 
 
 ?>
 

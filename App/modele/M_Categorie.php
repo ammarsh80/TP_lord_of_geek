@@ -18,5 +18,16 @@ class M_Categorie {
         $lesLignes = $res->fetchAll();
         return $lesLignes;
     }
+/**
+ * Retourne toutes les console sous forme d'un tableau associatif
+ *
+ * @return le tableau associatif des cosnole
+ */
+    public static function trouveLesConsoles(){
+        $req = "SELECT * FROM console";
+        $res = AccesDonnees::query($req);
+        $lesLignes = $res->fetchAll();
+        return $lesLignes;
+    }
 
 }

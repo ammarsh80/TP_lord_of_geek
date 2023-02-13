@@ -26,9 +26,28 @@ class M_Exemplaire {
         $lesLignes = $statement->fetchAll();
         return $lesLignes;
         }
+    /**
+     * Retourne sous forme d'un tableau associatif tous les jeux de la
+     * console passée en argument
+     *
+     * @param $idConsole
+     * @return un tableau associatif
+     */
+    public static function trouveLesJeuxDeConsole($idConsole) {
+        $req = "SELECT * FROM exemplaire
+         JOIN jeu ON `exemplaire`.`jeu_id` = `jeu`.`id_jeu` 
+        JOIN categorie ON `jeu`.`categorie_id` = `categorie`.`id_categorie` 
+        JOIN console ON `exemplaire`.`console_id` = `console`.`id_console`
+        WHERE `console`.`id_console` = :idConsole";
+        $statement = AccesDonnees::getPdo()->prepare($req);
+        $statement->bindParam(':idConsole', $idConsole, PDO::PARAM_INT);
+        $statement->execute();
+        $lesLignes = $statement->fetchAll();
+        return $lesLignes;
+        }
 
 /**
- * affiche tou les jeux
+ * affiche tous les jeux
  *
  * @return void
  */
