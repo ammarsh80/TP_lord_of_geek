@@ -8,9 +8,11 @@
     <h2>
         le prince des jeux sur internet
     </h2>
+
 </section>
 <section id="section_jeux_acceuil">
     <?php
+
     foreach ($lesJeux as $unJeu) {
         $idexemplaire = $unJeu['id_exemplaire'];
         $description = $unJeu['description'];

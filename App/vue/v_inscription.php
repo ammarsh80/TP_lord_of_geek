@@ -1,10 +1,10 @@
 <!-- <section id="creationCommande"> -->
 <section id="form_inscription">
 
-    <h1>Veuillez renseigner le formulaire d'inscription</h1>
+    <h1>Veuillez vous connecter en renseignant correctement votre pseudo et votre mot de passe </h1>
+    <p>Si vous n'êtes pas encore inscrit, veuillez renseigner le formulaire d'inscription avant de vous connectez</p>
 
     <form method="POST" action="index.php?uc=inscription&action=confirmerInscription">
-    <!-- <form method="POST" action="index.php?uc=commander&action=confirmerCommande"> -->
 
         <fieldset>
             <legend>S'inscrire</legend>
@@ -33,6 +33,7 @@
                 <label for="cp">Code postal* </label>
                 <input id="cp" type="text" name="cp" value="<?= $cp ?>" size="10" maxlength="10">
             </p>
+            <br>
             <p>
                 <label for="ville">Ville* </label>
                 <input id="ville" type="text" name="ville"  value="<?= $ville ?>" size="50" maxlength="50">

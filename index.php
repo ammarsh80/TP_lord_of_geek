@@ -1,7 +1,5 @@
 <?php
-
-
-
+session_start(); 
 
 // Pour afficher les erreurs PHP
 error_reporting(E_ALL);

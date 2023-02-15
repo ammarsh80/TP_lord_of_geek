@@ -244,7 +244,11 @@ input[type="submit"] {
 }
 
 #form_inscription h1 {
-    margin-left: 25%;
+color:blue;
+}
+#form_inscription p {
+text-align:center;
+font-size:1.3em;
 }
 
 #identification {
@@ -288,4 +292,10 @@ input[type="submit"] {
 }
 #input_psw{
     margin-right: 40px;
+}
+.hidden{
+    display:none;
+}
+.block{
+    display:block;
 }

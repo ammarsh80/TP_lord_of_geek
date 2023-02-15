@@ -178,4 +178,25 @@ class M_Commande
         }
         return $id_client;
     }
+
+        // Affiche toutes les informations des jeux achetés par un client
+
+        public static function afficherCommandes($id_utilisateur) {
+            $pdo = Accesdonnees::getPdo();
+            $stmt = $pdo->prepare("SELECT commande.id_commande, jeu.nom_jeu AS jeux, console.nom_console AS console, exemplaire.etat, categorie.nom AS categorie, exemplaire.prix
+            FROM client
+            JOIN commande ON commande.client_id = client.id_client
+            JOIN ligne_commande ON ligne_commande.commande_id = commande.id_commande
+            JOIN exemplaire ON exemplaire.id_exemplaire = ligne_commande.exemplaire_id
+            JOIN jeu ON jeu.id_jeu = exemplaire.jeu_id
+            JOIN console ON console.id_console = exemplaire.console_id
+            JOIN categorie ON categorie.id_categorie = jeu.categorie_id
+            JOIN utilisateur ON client.id_client = utilisateur.client_id
+            WHERE utilisateur.id_utilisateur = :id_utilisateur
+            ORDER BY commande.id_commande");
+            $stmt->bindParam(":id_utilisateur", $id_utilisateur);
+            $stmt->execute();
+            $lesCommandes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $lesCommandes;
+        }
 }
