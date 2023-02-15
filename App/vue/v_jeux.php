@@ -100,11 +100,5 @@
         <?php
         }
         ?>
-
-
-
     </section>
-
-
-
 </section>

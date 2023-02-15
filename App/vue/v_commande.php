@@ -37,7 +37,6 @@ if (isset($_SESSION["id"])) {
                 <input type="reset" value="Annuler" name="annuler"> 
             </p>
     </form>
-
     <?php
     }
 
@@ -45,8 +44,6 @@ if (isset($_SESSION["id"])) {
         header('Location: index.php?uc=inscription&action=demandeInscription');
     }
         ?>
-
-
 </section>
 
 

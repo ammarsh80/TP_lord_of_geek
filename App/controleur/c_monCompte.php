@@ -41,8 +41,6 @@ if (!empty($_SESSION['id'])) {
 }
 switch ($action) {
   case 'demandChangerProfil': {
-      // $nom = '';
-      // $prenom = '';
       $rue = '';
       $cp = '';
       $ville = '';
@@ -58,13 +56,12 @@ switch ($action) {
     $mail = '';
     $erreurs = '';
     $identifiant = filter_input(INPUT_POST, "identifiant");
-    // $nom = filter_input(INPUT_POST, "nom");
-    // $prenom = filter_input(INPUT_POST, "prenom");
     $rue = filter_input(INPUT_POST, "rue");
     $cp = filter_input(INPUT_POST, "cp");
     $ville = filter_input(INPUT_POST, "ville");
     $mail = filter_input(INPUT_POST, "mail");
-    $erreurs = M_session::changerInfoClient($_SESSION['id'], $rue, $mail);
+    $ville_id = M_session::trouveOuCreerVille($ville, $cp);
+    $erreurs = M_session::changerInfoClient($_SESSION['id'], $rue, $mail, $ville_id);
 
     if ($erreurs) {
       afficheErreurs($erreurs);
@@ -73,7 +70,6 @@ switch ($action) {
     }
 
     $_SESSION['client'] = M_session::trouverClientParId($_SESSION['id']);
-    // $_SESSION['client'] = M_session::trouverClientParId($clientSession['id']);
 
     header("Location: index.php?uc=compte");
     die();

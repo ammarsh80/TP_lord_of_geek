@@ -1,6 +1,5 @@
 <?php
 
-// include 'App/modele/M_commande.php';
 include 'App/modele/M_Session.php';
 include 'App/modele/M_Commande.php';
 

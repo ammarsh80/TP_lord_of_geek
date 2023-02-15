@@ -1,4 +1,3 @@
-<!-- <section id="creationCommande"> -->
 <section id="form_inscription">
 
     <h1>Veuillez vous connecter en renseignant correctement votre pseudo et votre mot de passe </h1>

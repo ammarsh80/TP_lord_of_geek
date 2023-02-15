@@ -1,6 +1,3 @@
-<!-- <p style="text-align: center;">
-    <img src="./public/images/a_venir.png" width="500px" hight="auto">
-</p> -->
 <?php
 include 'APP/controleur/c_monCompte.php';
 
@@ -39,6 +36,32 @@ $mail = '';
 
 </tbody>
 </table>
+<br><hr>
+        <form method="POST" action="index.php?uc=administrer&action=changerProfil">
+            <fieldset>
+                <legend>Modifier les informations de mon compte</legend>
+              
+                <p>
+                    <label for="ville">Adresse</label>
+                    <input id="rue" type="text" name="rue" value="<?= $rue ?>" maxlength="90">
+                </p>
+                <p>
+                    <label for="rue">Ville</label>
+                    <input id="ville" type="text" name="ville" value="<?= $ville ?>" maxlength="90">
+                </p>
+                <p>
+                    <label for="cp">Code postal</label>
+                    <input id="cp" type="text" name="cp" value="<?= $cp ?>" size="5" maxlength="5">
+                </p>
+                <p>
+                    <label for="mail">Email </label>
+                    <input id="mail" type="text" name="mail" value="<?= $mail ?>" maxlength="100">
+                </p>
+                <p>
+                    <input type="submit" value="Modifier" name="Valider">
+                    <input type="reset" value="Annuler" name="Annuler">
+                </p>
+        </form>
 <br><br>
     <h1>Commandes déjà passées</h1>
          <table class="table_commandes">
@@ -64,24 +87,4 @@ $mail = '';
 
         </tbody>
         </table>
-
-     <br><hr>
-        <form method="POST" action="index.php?uc=administrer&action=changerProfil">
-            <fieldset>
-                <legend>Modifier les informations de mon compte</legend>
-              
-                <p>
-                    <label for="ville">Rue</label>
-                    <input id="rue" type="text" name="rue" value="<?= $rue ?>" maxlength="90">
-                </p>
-
-                <p>
-                    <label for="mail">Email </label>
-                    <input id="mail" type="text" name="mail" value="<?= $mail ?>" maxlength="100">
-                </p>
-                <p>
-                    <input type="submit" value="Modifier" name="Valider">
-                    <input type="reset" value="Annuler" name="Annuler">
-                </p>
-        </form>
 </section>

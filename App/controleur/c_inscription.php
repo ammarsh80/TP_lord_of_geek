@@ -8,9 +8,7 @@ include 'App/modele/M_Session.php';
  */
 switch ($action) {
     case 'demandeInscription':
-        // $n = nbJeuxDuPanier();
-        // if ($n > 0) 
-        {
+               {
             $nom = '';
             $prenom = '';
             $pseudo = '';
@@ -20,11 +18,7 @@ switch ($action) {
             $cp = '';
             $mail = '';
         }
-        // else {
-        //     afficheMessage("Panier vide !!");
-        //     $uc = '';
-        // }
-        break;
+            break;
     case 'confirmerInscription':
         $nom = filter_input(INPUT_POST, 'nom');
         $prenom = filter_input(INPUT_POST, 'prenom');

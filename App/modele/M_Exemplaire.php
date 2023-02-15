@@ -49,7 +49,7 @@ class M_Exemplaire {
 /**
  * affiche tous les jeux
  *
- * @return void
+ * @return $voirTousLesJeux
  */
     public static function trouverAllJeux(){
         $reqSQL = "SELECT * FROM exemplaire
@@ -62,7 +62,14 @@ class M_Exemplaire {
         return $voirTousLesJeux;
         }
 
-    public static function trouverLesEtat($etat){
+
+/**
+ * affiche les jeux selon leurs etat
+ *
+ * @param [type] $etat
+ * @return $voirJeuxSelonEtat
+ */
+public static function trouverLesEtat($etat){
         $reqSQL = "SELECT * FROM exemplaire 
         JOIN jeu ON `exemplaire`.`jeu_id` = `jeu`.`id_jeu` 
         JOIN categorie ON `jeu`.`categorie_id` = `categorie`.`id_categorie`
@@ -79,7 +86,7 @@ class M_Exemplaire {
      * Retourne les jeux concernés par le tableau des idProduits passée en argument
      *
      * @param $desIdJeux tableau d'idProduits
-     * @return un tableau associatif
+     * @return un tableau associatif $lesProduits
      */
     public static function trouveLesJeuxDuTableau($desIdJeux) {
         $nbProduits = count($desIdJeux);

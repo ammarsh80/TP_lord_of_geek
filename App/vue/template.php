@@ -1,7 +1,4 @@
 <!DOCTYPE html>
-<!--
-Prototype de Lord Of Geek (LOG)
--->
 <html>
 
 <head>
@@ -14,9 +11,7 @@ Prototype de Lord Of Geek (LOG)
 <body>
     <header>
 
-        <!-- Images En-tête -->
         <img src="public/images/logo.png" alt="Logo Lord Of Geek" />
-        <!--  Menu haut-->
         <?php
         if (!isset($_SESSION["id"])) { ?>
             <nav id="menu">

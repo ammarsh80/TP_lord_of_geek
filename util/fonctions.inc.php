@@ -90,11 +90,17 @@ function afficheErreurs(array $msgErreurs) {
     }
     echo '</ul></div>';
 }
+
+/**
+ * Affiche une erreur
+ *
+ * @param string $msgErreur
+ * @return $msgErreur
+ */
 function afficheErreur(string $msgErreur) {
     echo '<div class="erreur">' . $msgErreur . '</div>';
 
 }
-
 /**
  * Affiche un message bleu
  * @param string $msg

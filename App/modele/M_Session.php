@@ -2,27 +2,13 @@
 
 class M_Session
 {
-    private function connexion(): PDO
-    {
-        // Connexion et sélection de la base de données :
-        try {
-            // $conn = new PDO("mysql:host=localhost:8080; dbname=ma_base_jeux", "root", "MajdAhmad023716292)");
-            $conn = AccesDonnees::getPdo();
-            // set the PDO error mode to exception
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            // echo "Connected successfully";
-        } catch (PDOException $e) {
-            echo "Connection failed: " . $e->getMessage();
-            die;
-        }
-        return $conn;
-    }
+
     /**
      * Fonction qui vérifie que l'identification saisie est correcte.
      */
     function utilisateur_existe($identifiant, $mot_de_passe): bool
     {
-        $conn = $this->connexion();
+        $conn = AccesDonnees::getPdo();
         $sql = 'SELECT 1 FROM utilisateur ';
         $sql .= 'WHERE identifiant = :login AND mot_de_passe = :mdp';
         // prepare and bind
@@ -44,10 +30,16 @@ class M_Session
         }
         return (bool) $existe;
     }
-
+    /**
+     * enregister un utilisateur (mot de passe cripté)
+     *
+     * @param String $pseudo
+     * @param String $psw
+     * @return boolean
+     */
     function register(String $pseudo, String $psw): bool
     {
-        $conn = $this->connexion();
+        $conn = AccesDonnees::getPdo();
         $psw = password_hash($psw, PASSWORD_BCRYPT);
         $sql = "INSERT INTO utilisateur (identifiant, mot_de_passe)
         VALUES(:pseudo, :psw);";
@@ -57,6 +49,13 @@ class M_Session
         return $stmt->execute();
     }
 
+    /**
+     * vérifie le mdp pour la connexion
+     *
+     * @param String $pseudo
+     * @param String $psw
+     * @return boolean
+     */
     public static function checkPassword(String $pseudo, String $psw)
     {
         $conn = AccesDonnees::getPdo();
@@ -135,33 +134,6 @@ class M_Session
         }
         return $erreurs;
     }
-    // /**
-    //  * creer une ville
-    //  *
-    //  * @param [chaîne] $ville
-    //  * @param [INT] $cp
-    //  * @return :$id_ville
-    //  */
-    // public static function creerVille($ville, $cp)
-    // {
-    //     $pdo = AccesDonnees::getPdo();
-    //     $req = "SELECT ville.id_ville FROM ville WHERE nom_ville = :ville AND cp= :cp";
-    //     $statement = AccesDonnees::getPdo()->prepare($req);
-    //     $statement->bindParam(':ville', $ville, PDO::PARAM_STR);
-    //     $statement->bindParam(':cp', $cp, PDO::PARAM_INT);
-    //     $statement->execute();
-    //     $id_ville = $statement->fetchColumn();
-
-    //     if ($id_ville == false) {
-    //         $req = "INSERT INTO ville (nom_ville, cp) VALUES (:ville,:cp)";
-    //         $statement = AccesDonnees::getPdo()->prepare($req);
-    //         $statement->bindParam(':ville', $ville, PDO::PARAM_STR);
-    //         $statement->bindParam(':cp', $cp, PDO::PARAM_INT);
-    //         $statement->execute();
-    //         $id_ville = AccesDonnees::getPdo()->lastInsertId();
-    //         return $id_ville;
-    //     }
-    // }
 
     /**
      * trouve ou creer une ville
@@ -190,19 +162,6 @@ class M_Session
         }
         return $id_ville;
     }
-
-
-    // function register(String $pseudo, String $psw): bool
-    // {
-    //     $conn = $this->connexion();
-    //     $psw = password_hash($psw, PASSWORD_BCRYPT);
-    //     $sql = "INSERT INTO utilisateur (identifiant, mot_de_passe)
-    //     VALUES(:pseudo, :psw);";
-    //     $stmt = $conn->prepare($sql);
-    //     $stmt->bindParam(":pseudo", $pseudo);
-    //     $stmt->bindParam(":psw", $psw);
-    //     return $stmt->execute();
-    // }
 
     /**
      * crée un nouveau client
@@ -272,9 +231,10 @@ class M_Session
         return $id_Utilisateur;
     }
 
-    public static function changerInfoClient($id_client, $adresse, $mail){
-    $erreurs = M_Session::estProfilValide($adresse, $mail);
-        if (count($erreurs)>0) {
+    public static function changerInfoClient($id_client, $adresse, $mail, $ville_id)
+    {
+        $erreurs = M_Session::estProfilValide($adresse, $mail);
+        if (count($erreurs) > 0) {
             return $erreurs;
         }
         $pdo = AccesDonnees::getPdo();
@@ -285,43 +245,34 @@ class M_Session
 
         $stmt->bindParam(":id_client", $id_client);
         $stmt->execute();
-        
-        // $stmt = $pdo->prepare("UPDATE ville 
-        // LEFT JOIN client ON ville.id_ville=client.ville_id 
-        // SET nom_ville = :ville, cp = :cp WHERE client.id_client = :id_client");
-        // $stmt->bindParam(":ville", $ville);
-        // $stmt->bindParam(":cp", $cp);
-        // $stmt->bindParam(":id_client", $id_client);
-        // $stmt->execute();
+
+        $stmt2 = $pdo->prepare("UPDATE client JOIN utilisateur ON utilisateur.client_id=client.id_client JOIN ville ON client.ville_id = ville.id_ville SET client.ville_id = :ville_id WHERE utilisateur.id_utilisateur = :id_client");
+        $stmt2->bindParam(":ville_id", $ville_id);
+        $stmt2->bindParam(":id_client", $id_client);
+        $stmt2->execute();
     }
 
     public static function estProfilValide($rue,  $mail)
     {
         $erreurs = [];
-        // if ($nom == "") {
-        //     $erreurs[] = "Il faut saisir le champ nom";
-        // }
-        // if ($prenom == "") {
-        //     $erreurs[] = "Il faut saisir le champ prenom";
-        // }
+    
         if ($rue == "") {
             $erreurs[] = "Il faut saisir le champ rue";
         }
-        // if ($ville == "") {
-        //     $erreurs[] = "Il faut saisir le champ ville";
-        // }
-        // if ($cp == "") {
-        //     $erreurs[] = "Il faut saisir le champ Code postal";
-        // } else if (!estUnCp($cp)) {
-        //     $erreurs[] = "erreur de code postal";
-        // }
-        if ($mail == "") {
+           if ($mail == "") {
             $erreurs[] = "Il faut saisir le champ mail";
         } else if (!estUnMail($mail)) {
             $erreurs[] = "erreur de mail";
         }
         return $erreurs;
     }
+
+    /**
+     * cherche le client dont l'id = l'id utilisateur
+     *
+     * @param [type] $id_client
+     * @return $client
+     */
     public static function trouverClientParId($id_client)
     {
         $pdo = AccesDonnees::getPdo();

@@ -76,6 +76,8 @@ class M_Commande
         }
         return $erreurs;
     }
+
+
     /**
      * trouve ou creer une ville
      *
@@ -103,44 +105,7 @@ class M_Commande
         }
         return $id_ville;
     }
-    // /**
-    //  * trouve un client déjà enregistré ou crée un nouveau client
-    //  *
-    //  * @param [chaîne] $nom
-    //  * @param [chaîne] $prenom
-    //  * @param [chaîne] $adresse
-    //  * @param [chaîne] $email
-    //  * @param [INT] $ville_id
-    //  * @return :$idclient
-    //  */
-    // public static function trouveOuCreerClient($nom, $prenom, $adresse, $email, $ville_id)
-    // {
-
-    //     $pdo = AccesDonnees::getPdo();
-    //     $req = "SELECT id_client FROM client WHERE nom = :nom AND prenom = :prenom AND adresse = :adresse AND email = :email AND ville_id = :ville_id";
-    //     $statement = AccesDonnees::getPdo()->prepare($req);
-    //     $statement->bindParam(':nom', $nom, PDO::PARAM_STR);
-    //     $statement->bindParam(':prenom', $prenom, PDO::PARAM_STR);
-    //     $statement->bindParam(':adresse', $adresse, PDO::PARAM_STR);
-    //     $statement->bindParam(':email', $email, PDO::PARAM_STR);
-    //     $statement->bindParam(':ville_id', $ville_id, PDO::PARAM_INT);
-    //     $statement->execute();
-    //     $idclient = $statement->fetchColumn();
-
-    //     if ($idclient == false) {
-    //         $req = "INSERT INTO client (nom, prenom, adresse, email, ville_id) VALUES (:nom,:prenom,:adresse,:email,:ville_id)";
-    //         $statement = AccesDonnees::getPdo()->prepare($req);
-    //         $statement->bindParam(':nom', $nom, PDO::PARAM_STR);
-    //         $statement->bindParam(':prenom', $prenom, PDO::PARAM_STR);
-    //         $statement->bindParam(':adresse', $adresse, PDO::PARAM_STR);
-    //         $statement->bindParam(':email', $email, PDO::PARAM_STR);
-    //         $statement->bindParam(':ville_id', $ville_id, PDO::PARAM_INT);
-    //         $statement->execute();
-    //         $idclient = $statement->fetchColumn();
-    //         $idclient = $pdo->lastInsertId();
-    //     }
-    //     return $idclient;
-    // }
+ 
        /**
      * crée un nouveau client
      *
@@ -179,8 +144,12 @@ class M_Commande
         return $id_client;
     }
 
-        // Affiche toutes les informations des jeux achetés par un client
-
+/**
+ *    Affiche toutes les informations des jeux achetés par un client
+ *
+ * @param [type] $id_utilisateur
+ * @return $lesCommandes
+ */
         public static function afficherCommandes($id_utilisateur) {
             $pdo = Accesdonnees::getPdo();
             $stmt = $pdo->prepare("SELECT commande.id_commande, jeu.nom_jeu AS jeux, console.nom_console AS console, exemplaire.etat, categorie.nom AS categorie, exemplaire.prix
@@ -199,6 +168,13 @@ class M_Commande
             $lesCommandes = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $lesCommandes;
         }
+
+        /**
+         * Affiche toutes les informations de l'utilisateur pour affichage dans page compte
+         *
+         * @param [type] $id_utilisateur
+         * @return $InfoUtilisateur
+         */
         public static function afficherInfoUtilisateur($id_utilisateur) {
             $pdo = Accesdonnees::getPdo();
             $stmt = $pdo->prepare("SELECT DISTINCT utilisateur.identifiant, client.nom, client.prenom, client.adresse, ville.nom_ville, ville.cp , client.email
@@ -214,6 +190,14 @@ class M_Commande
             $InfoUtilisateur = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $InfoUtilisateur;
         }
+
+
+        /**
+         * Affiche toutes les informations de l'utilisateur dans le formulaire de commande
+         *
+         * @param [type] $moiUtilisateur
+         * @return $InfoUtilisateurPourCommander
+         */
         public static function infoUtilisateurPourCommander($moiUtilisateur)
         {
             $moiUtilisateur = $_SESSION['id'];

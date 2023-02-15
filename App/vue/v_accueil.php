@@ -1,6 +1,3 @@
-
-
-
 <section>
     <h1>
         Lord Of Geek

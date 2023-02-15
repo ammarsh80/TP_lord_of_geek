@@ -256,13 +256,7 @@ font-size:1.3em;
    padding-top: 10px;
     padding-left: 10px;
     padding-bottom: 3px;
-    /*  position: fixed;
-    top: 30px;
-    width: 90vw;
-    height: 30px;
-    display: grid;
-    gap: 10px;
-    grid-template-columns: 900px 100px 100px; */
+   
 }
 
 
@@ -281,10 +275,7 @@ font-size:1.3em;
     background-color: rgb(242, 227, 18);
 }
 #connexion{
-    /* position: absolute;
-    top: 10px;
-    right: 30px; */
-    background-color: rgb(43, 245, 225);
+     background-color: rgb(43, 245, 225);
 }
 #label_psw{
     margin-left: 30px;
@@ -299,7 +290,6 @@ font-size:1.3em;
 .block{
     display:block;
 }
-
 
 #compte h1{
 text-decoration:underline;
