@@ -10,6 +10,10 @@ require("./util/fonctions.inc.php");
 require('./util/validateurs.inc.php');
 require("./App/modele/AccesDonnees.php");
 
+$clientSession = [];
+if (!empty($_SESSION['client'])) {
+    $clientSession = $_SESSION['client'];
+}
 
 $uc = filter_input(INPUT_GET, 'uc'); // Use Case
 $action = filter_input(INPUT_GET, 'action'); // Action

@@ -9,7 +9,6 @@ switch ($action) {
     $identifiant = filter_input(INPUT_POST, 'identifiant');
     $mot_de_passe = filter_input(INPUT_POST, 'mot_de_passe');
     $client = M_session::checkPassword($identifiant, $mot_de_passe);
-var_dump($client);
     if (!$client) {
       afficheErreur("Entrez votre identifiant et votre mot de passe ou enregistrez-vous sur la page 'S'inscrire', merci !");
     } else {
@@ -21,7 +20,7 @@ var_dump($client);
 
   case 'logoutClient':
     // supprimerPanier();
-    unset($_SESSION['client']);
+    unset($_SESSION['id']);
     header('Location: index.php');
     die();
     break;
@@ -30,34 +29,58 @@ var_dump($client);
 
 $commandesClient = [];
 
-if (!empty($clientSession)) {
-    $commandesClient = M_Commande::afficherCommandes($clientSession['id']);
+$commandesClient = M_Commande::afficherCommandes($_SESSION['id']);
+if (!empty($_SESSION['id'])) {
+  $commandesClient = M_Commande::afficherCommandes($_SESSION['id']);
 }
+$InfoUtilisateur = [];
 
+$InfoUtilisateur = M_Commande::afficherInfoUtilisateur($_SESSION['id']);
+if (!empty($_SESSION['id'])) {
+  $InfoUtilisateur = M_Commande::afficherInfoUtilisateur($_SESSION['id']);
+}
 switch ($action) {
-    case "changerProfil":
-        $nom = filter_input(INPUT_POST, "nom");
-        $prenom = filter_input(INPUT_POST, "prenom");
-        $rue = filter_input(INPUT_POST, "rue");
-        $cp = filter_input(INPUT_POST, "cp");
-        $ville = filter_input(INPUT_POST, "ville");
-        $mail = filter_input(INPUT_POST, "mail");
-        $erreurs = M_session::changerInfoClient($clientSession['id'], $nom, $prenom, $rue, $cp, $ville, $mail);
+  case 'demandChangerProfil': {
+      // $nom = '';
+      // $prenom = '';
+      $rue = '';
+      $cp = '';
+      $ville = '';
+      $email = '';
+      $erreurs = '';
+    }
+}
+switch ($action) {
+  case "changerProfil":
+    $rue = '';
+    $cp = '';
+    $ville = '';
+    $mail = '';
+    $erreurs = '';
+    $identifiant = filter_input(INPUT_POST, "identifiant");
+    // $nom = filter_input(INPUT_POST, "nom");
+    // $prenom = filter_input(INPUT_POST, "prenom");
+    $rue = filter_input(INPUT_POST, "rue");
+    $cp = filter_input(INPUT_POST, "cp");
+    $ville = filter_input(INPUT_POST, "ville");
+    $mail = filter_input(INPUT_POST, "mail");
+    $erreurs = M_session::changerInfoClient($_SESSION['id'], $rue, $mail);
 
-        if ($erreurs) {
-            afficheErreurs($erreurs);
-        } else {
-            afficheMessage("Vos changements ont bien été enregistrés.");
-        }
+    if ($erreurs) {
+      afficheErreurs($erreurs);
+    } else {
+      afficheMessage("Vos changements ont bien été enregistrés.");
+    }
 
-        $_SESSION['client'] = M_session::trouverClientParId($clientSession['id']);
+    $_SESSION['client'] = M_session::trouverClientParId($_SESSION['id']);
+    // $_SESSION['client'] = M_session::trouverClientParId($clientSession['id']);
 
-        header("Location: index.php?uc=compte");
-        die();
-        break;
+    header("Location: index.php?uc=compte");
+    die();
+    break;
 
-    default:
-        break;
+  default:
+    break;
 }
 
 

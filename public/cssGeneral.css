@@ -299,3 +299,13 @@ font-size:1.3em;
 .block{
     display:block;
 }
+
+
+#compte h1{
+text-decoration:underline;
+}
+.table_commandes{
+    width: 80vw;
+    margin-left:5vw;
+    text-align:center;
+}

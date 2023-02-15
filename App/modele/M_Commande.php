@@ -199,4 +199,36 @@ class M_Commande
             $lesCommandes = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $lesCommandes;
         }
+        public static function afficherInfoUtilisateur($id_utilisateur) {
+            $pdo = Accesdonnees::getPdo();
+            $stmt = $pdo->prepare("SELECT DISTINCT utilisateur.identifiant, client.nom, client.prenom, client.adresse, ville.nom_ville, ville.cp , client.email
+            FROM utilisateur
+            JOIN client
+            ON utilisateur.client_id=client.id_client
+            JOIN ville
+            ON client.ville_id = ville.id_ville
+            WHERE utilisateur.id_utilisateur = :id_utilisateur 
+            AND client.id_client= utilisateur.client_id");
+            $stmt->bindParam(":id_utilisateur", $id_utilisateur);
+            $stmt->execute();
+            $InfoUtilisateur = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $InfoUtilisateur;
+        }
+        public static function infoUtilisateurPourCommander($moiUtilisateur)
+        {
+            $moiUtilisateur = $_SESSION['id'];
+            $pdo = Accesdonnees::getPdo();
+            $stmt = $pdo->prepare("SELECT DISTINCT client.nom, client.prenom, client.adresse,  ville.cp, ville.nom_ville, client.email
+                FROM utilisateur
+                JOIN client
+                ON utilisateur.client_id=client.id_client
+                JOIN ville
+                ON client.ville_id = ville.id_ville
+                WHERE utilisateur.id_utilisateur = :id_utilisateur");
+            $stmt->bindParam(":id_utilisateur", $moiUtilisateur);
+            $stmt->execute();
+            $InfoUtilisateurPourCommander = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $InfoUtilisateurPourCommander;
+        }
 }
+

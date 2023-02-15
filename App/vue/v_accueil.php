@@ -13,6 +13,7 @@
 <section id="section_jeux_acceuil">
     <?php
 
+
     foreach ($lesJeux as $unJeu) {
         $idexemplaire = $unJeu['id_exemplaire'];
         $description = $unJeu['description'];

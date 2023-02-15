@@ -1,7 +1,8 @@
 <?php
 
-include 'App/modele/M_commande.php';
+// include 'App/modele/M_commande.php';
 include 'App/modele/M_Session.php';
+include 'App/modele/M_Commande.php';
 
 /**
  * Controleur pour les commandes
@@ -16,7 +17,9 @@ switch ($action) {
             $rue = '';
             $ville = '';
             $cp = '';
-            $mail = '';
+            $email = '';
+            $InfoUtilisateurPourCommander=(M_Commande::infoUtilisateurPourCommander($_SESSION['id']));
+
         } else {
             afficheMessage("Panier vide !!");
             $uc = '';
@@ -47,3 +50,4 @@ switch ($action) {
         }
         break;
 }
+

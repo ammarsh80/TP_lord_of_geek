@@ -44,7 +44,7 @@ class M_Session
         }
         return (bool) $existe;
     }
-    
+
     function register(String $pseudo, String $psw): bool
     {
         $conn = $this->connexion();
@@ -71,11 +71,9 @@ class M_Session
             $psw_bdd = $data['mot_de_passe'];
             // Le reste du code ici
         }
-        if ($stmt->rowCount() == 0){
+        if ($stmt->rowCount() == 0) {
             header('Location: index.php?uc=inscription&action=demandeInscription');
-
             afficheErreur("Entrez votre identifiant et votre mot de passe ou enregistrez-vous sur la page 'S'inscrire', merci !");
-
             die;
         }
 
@@ -87,6 +85,7 @@ class M_Session
         }
         return false;
     }
+
 
 
     /**
@@ -273,42 +272,49 @@ class M_Session
         return $id_Utilisateur;
     }
 
-    public static function changerInfoClient($id, $nom, $prenom, $rue, $cp, $ville, $mail) {
-        if($erreurs = static::estProfilValide($nom, $prenom, $rue, $cp, $ville, $mail)) {
+    public static function changerInfoClient($id_client, $adresse, $mail){
+    $erreurs = M_Session::estProfilValide($adresse, $mail);
+        if (count($erreurs)>0) {
             return $erreurs;
         }
         $pdo = AccesDonnees::getPdo();
-        $stmt = $pdo->prepare("UPDATE client SET nom = :nom, prenom = :prenom, adresse_rue = :rue, cp = :cp, ville = :ville, mail = :mail WHERE client.id = :id");
-        $stmt->bindParam(":nom", $nom);
-        $stmt->bindParam(":prenom", $prenom);
-        $stmt->bindParam(":rue", $rue);
-        $stmt->bindParam(":cp", $cp);
-        $stmt->bindParam(":ville", $ville);
-        $stmt->bindParam(":mail", $mail);
-        $stmt->bindParam(":id", $id);
-        $stmt->execute();
+        $stmt = $pdo->prepare("UPDATE client JOIN utilisateur ON utilisateur.client_id=client.id_client SET adresse = :adresse, email = :email WHERE utilisateur.id_utilisateur = :id_client");
 
+        $stmt->bindParam(":adresse", $adresse);
+        $stmt->bindParam(":email", $mail);
+
+        $stmt->bindParam(":id_client", $id_client);
+        $stmt->execute();
+        
+        // $stmt = $pdo->prepare("UPDATE ville 
+        // LEFT JOIN client ON ville.id_ville=client.ville_id 
+        // SET nom_ville = :ville, cp = :cp WHERE client.id_client = :id_client");
+        // $stmt->bindParam(":ville", $ville);
+        // $stmt->bindParam(":cp", $cp);
+        // $stmt->bindParam(":id_client", $id_client);
+        // $stmt->execute();
     }
 
-    public static function estProfilValide($nom, $prenom, $rue, $cp, $ville, $mail) {
+    public static function estProfilValide($rue,  $mail)
+    {
         $erreurs = [];
-        if ($nom == "") {
-            $erreurs[] = "Il faut saisir le champ nom";
-        }
-        if ($prenom == "") {
-            $erreurs[] = "Il faut saisir le champ prenom";
-        }
+        // if ($nom == "") {
+        //     $erreurs[] = "Il faut saisir le champ nom";
+        // }
+        // if ($prenom == "") {
+        //     $erreurs[] = "Il faut saisir le champ prenom";
+        // }
         if ($rue == "") {
             $erreurs[] = "Il faut saisir le champ rue";
         }
-        if ($ville == "") {
-            $erreurs[] = "Il faut saisir le champ ville";
-        }
-        if ($cp == "") {
-            $erreurs[] = "Il faut saisir le champ Code postal";
-        } else if (!estUnCp($cp)) {
-            $erreurs[] = "erreur de code postal";
-        }
+        // if ($ville == "") {
+        //     $erreurs[] = "Il faut saisir le champ ville";
+        // }
+        // if ($cp == "") {
+        //     $erreurs[] = "Il faut saisir le champ Code postal";
+        // } else if (!estUnCp($cp)) {
+        //     $erreurs[] = "erreur de code postal";
+        // }
         if ($mail == "") {
             $erreurs[] = "Il faut saisir le champ mail";
         } else if (!estUnMail($mail)) {
@@ -316,7 +322,8 @@ class M_Session
         }
         return $erreurs;
     }
-    public static function trouverClientParId($id_client) {
+    public static function trouverClientParId($id_client)
+    {
         $pdo = AccesDonnees::getPdo();
         $stmt = $pdo->prepare("SELECT * FROM client WHERE id_client = :id_client");
         $stmt->bindParam(":id_client", $id_client);
